@@ -24,7 +24,7 @@ const Navbar = () => {
 
                 <div className="flex items-center gap-6">
                     <Link
-                        href="/workouts"
+                        href="/"
                         className="px-4 py-1.5 rounded-full bg-lime-900/40 text-lime-400 font-semibold"
                     >
                         Workouts

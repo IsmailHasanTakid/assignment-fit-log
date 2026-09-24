@@ -8,7 +8,7 @@ const AllCards = ({ workout }) => {
 
     return (
         <Link
-            href={`/workout/${id}`}
+            href={`/details/${id}`}
             className="block bg-[#16181d] rounded-xl overflow-hidden hover:-translate-y-1 transition"
         >
             <div className="relative w-full h-75">
