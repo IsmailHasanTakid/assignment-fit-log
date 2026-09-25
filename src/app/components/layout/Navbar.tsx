@@ -16,7 +16,7 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className="bg-[#0c0c0f] px-8 py-5 mb-10 fixed top-0 left-0 w-full z-50">
+        <nav className="bg-[#0c0c0f] px-8 py-5 mb-4 fixed top-0 left-0 w-full z-50">
             <div className="flex justify-between items-center max-w-7xl mx-auto">
 
                 <div className="flex items-center gap-2">
@@ -39,11 +39,10 @@ const Navbar = () => {
                             <Link
                                 key={link.href}
                                 href={link.href}
-                                className={`px-4 py-1.5 font-semibold rounded-full border transition-all duration-300 ${
-                                    isActive
+                                className={`px-4 py-1.5 font-semibold rounded-full border transition-all duration-300 ${isActive
                                         ? "bg-[#ccff00] text-black border-[#ccff00]"
                                         : "text-gray-400 border-transparent hover:bg-[#ccff00] hover:text-black hover:border-[#ccff00]"
-                                }`}
+                                    }`}
                             >
                                 {link.label}
                             </Link>

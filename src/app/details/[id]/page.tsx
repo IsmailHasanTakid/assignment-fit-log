@@ -25,7 +25,7 @@ export default async function DetailsPage({ params }) {
                     />
                 </div>
 
-                <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-4">
                     <div>
                         <h1 className="text-3xl md:text-4xl font-extrabold uppercase tracking-wide">
                             {data.name}
