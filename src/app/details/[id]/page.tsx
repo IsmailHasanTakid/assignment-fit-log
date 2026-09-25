@@ -6,6 +6,10 @@ export default async function DetailsPage({ params }) {
     const res = await fetch(`https://api.abcz.workers.dev/api/fitlog/${id}`);
     const data = await res.json();
 
+    if (!res.ok) {
+        return <h2 className="text-center p-10">Id not found....</h2>
+    }
+
     return (
         <main className="min-h-screen bg-[#0d0f12] text-white p-6 md:p-12 flex justify-center items-center">
             <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
