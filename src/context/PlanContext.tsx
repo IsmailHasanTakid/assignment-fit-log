@@ -1,12 +1,47 @@
 "use client";
-import { createContext, useContext, useState, useEffect } from "react";
 
-const PlanContext = createContext(null);
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useState,
+    type ReactNode,
+} from "react";
 
-export function PlanProvider({ children }) {
-    const [todayPlan, setTodayPlan] = useState([]);
-    const [saved, setSaved] = useState([]);
-    const [doneIds, setDoneIds] = useState([]);
+type Exercise = {
+    id: number;
+    name: string;
+    image: string;
+    description?: string;
+    equipment?: string;
+    difficulty?: string;
+    sets?: number;
+    reps?: number;
+    duration?: number;
+    caloriesBurned?: number;
+    rating?: number;
+    muscleGroups?: string[];
+    instructions?: string[];
+};
+
+type PlanContextType = {
+    todayPlan: Exercise[];
+    saved: Exercise[];
+    doneIds: number[];
+
+    addToPlan: (exercise: Exercise) => void;
+    saveForLater: (exercise: Exercise) => void;
+    removeFromPlan: (id: number) => void;
+    removeFromSaved: (id: number) => void;
+    toggleDone: (id: number) => void;
+};
+
+const PlanContext = createContext<PlanContextType | null>(null);
+
+export function PlanProvider({ children }: { children: ReactNode }) {
+    const [todayPlan, setTodayPlan] = useState<Exercise[]>([]);
+    const [saved, setSaved] = useState<Exercise[]>([]);
+    const [doneIds, setDoneIds] = useState<number[]>([]);
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
@@ -19,52 +54,80 @@ export function PlanProvider({ children }) {
             if (storedSaved) setSaved(JSON.parse(storedSaved));
             if (storedDone) setDoneIds(JSON.parse(storedDone));
         } catch (err) {
-            setError("Failed to load plan from localStorage.");
+            console.error("Failed to load plan from localStorage.", err);
         } finally {
             setIsLoaded(true);
         }
     }, []);
+
     useEffect(() => {
         if (!isLoaded) return;
-        localStorage.setItem("fitlog_todayPlan", JSON.stringify(todayPlan));
+
+        localStorage.setItem(
+            "fitlog_todayPlan",
+            JSON.stringify(todayPlan)
+        );
     }, [todayPlan, isLoaded]);
 
     useEffect(() => {
         if (!isLoaded) return;
-        localStorage.setItem("fitlog_saved", JSON.stringify(saved));
+
+        localStorage.setItem(
+            "fitlog_saved",
+            JSON.stringify(saved)
+        );
     }, [saved, isLoaded]);
 
     useEffect(() => {
         if (!isLoaded) return;
-        localStorage.setItem("fitlog_doneIds", JSON.stringify(doneIds));
+
+        localStorage.setItem(
+            "fitlog_doneIds",
+            JSON.stringify(doneIds)
+        );
     }, [doneIds, isLoaded]);
 
-    const addToPlan = (exercise) => {
+    const addToPlan = (exercise: Exercise) => {
         setTodayPlan((prev) => {
-            if (prev.find((item) => item.id === exercise.id)) return prev;
+            if (prev.find((item) => item.id === exercise.id)) {
+                return prev;
+            }
+
             return [...prev, exercise];
         });
     };
 
-    const saveForLater = (exercise) => {
+    const saveForLater = (exercise: Exercise) => {
         setSaved((prev) => {
-            if (prev.find((item) => item.id === exercise.id)) return prev;
+            if (prev.find((item) => item.id === exercise.id)) {
+                return prev;
+            }
+
             return [...prev, exercise];
         });
     };
 
-    const removeFromPlan = (id) => {
-        setTodayPlan((prev) => prev.filter((item) => item.id !== id));
-        setDoneIds((prev) => prev.filter((doneId) => doneId !== id));
-    };
+    const removeFromPlan = (id: number) => {
+        setTodayPlan((prev) =>
+            prev.filter((item) => item.id !== id)
+        );
 
-    const removeFromSaved = (id) => {
-        setSaved((prev) => prev.filter((item) => item.id !== id));
-    };
-
-    const toggleDone = (id) => {
         setDoneIds((prev) =>
-            prev.includes(id) ? prev.filter((doneId) => doneId !== id) : [...prev, id]
+            prev.filter((doneId) => doneId !== id)
+        );
+    };
+
+    const removeFromSaved = (id: number) => {
+        setSaved((prev) =>
+            prev.filter((item) => item.id !== id)
+        );
+    };
+
+    const toggleDone = (id: number) => {
+        setDoneIds((prev) =>
+            prev.includes(id)
+                ? prev.filter((doneId) => doneId !== id)
+                : [...prev, id]
         );
     };
 
@@ -87,5 +150,11 @@ export function PlanProvider({ children }) {
 }
 
 export function usePlan() {
-    return useContext(PlanContext);
+    const context = useContext(PlanContext);
+
+    if (!context) {
+        throw new Error("usePlan must be used inside PlanProvider");
+    }
+
+    return context;
 }

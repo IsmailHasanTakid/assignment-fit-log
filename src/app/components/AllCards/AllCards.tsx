@@ -1,10 +1,34 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Clock, Flame, Star } from 'lucide-react';
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Clock, Flame, Star } from "lucide-react";
 
-const AllCards = ({ workout }) => {
-    const { id, name, image, muscleGroups, equipment, duration, caloriesBurned, rating } = workout;
+type Workout = {
+    id: number;
+    name: string;
+    image: string;
+    muscleGroups: string[];
+    equipment: string;
+    duration: number;
+    caloriesBurned: number;
+    rating: number;
+};
+
+type AllCardsProps = {
+    workout: Workout;
+};
+
+const AllCards = ({ workout }: AllCardsProps) => {
+    const {
+        id,
+        name,
+        image,
+        muscleGroups,
+        equipment,
+        duration,
+        caloriesBurned,
+        rating,
+    } = workout;
 
     return (
         <Link
@@ -32,16 +56,23 @@ const AllCards = ({ workout }) => {
                     ))}
                 </div>
 
-                <h3 className="text-white font-bold text-lg uppercase">{name}</h3>
-                <p className="text-gray-400 text-sm mb-3">{equipment}</p>
+                <h3 className="text-white font-bold text-lg uppercase">
+                    {name}
+                </h3>
+
+                <p className="text-gray-400 text-sm mb-3">
+                    {equipment}
+                </p>
 
                 <div className="border-t border-gray-800 pt-3 flex items-center gap-4 text-gray-300 text-sm">
                     <span className="flex items-center gap-1">
                         <Clock size={14} /> {duration} min
                     </span>
+
                     <span className="flex items-center gap-1">
                         <Flame size={14} /> {caloriesBurned} kcal
                     </span>
+
                     <span className="flex items-center gap-1">
                         <Star size={14} /> {rating}
                     </span>
