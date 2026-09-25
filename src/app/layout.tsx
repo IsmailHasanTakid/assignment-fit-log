@@ -33,7 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </PlanProvider>
         <ToastContainer
-          position="top-right"
+          position="bottom-right"
           autoClose={3000}
           theme="dark"
         />

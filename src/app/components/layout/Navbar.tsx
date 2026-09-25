@@ -3,10 +3,18 @@ import React from 'react';
 import Image from 'next/image';
 import logo from "../../../assets/logo.png";
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { usePlan } from '@/context/PlanContext';
 
 const Navbar = () => {
     const { todayPlan, saved } = usePlan();
+    const pathname = usePathname();
+
+    const navLinks = [
+        { href: "/", label: "Workouts" },
+        { href: "/my-plan", label: "My Plan" },
+    ];
+
     return (
         <nav className="bg-[#0c0c0f] px-8 py-5 mb-10 fixed top-0 left-0 w-full z-50">
             <div className="flex justify-between items-center max-w-7xl mx-auto">
@@ -19,30 +27,32 @@ const Navbar = () => {
                         height={26}
                         width={26}
                     />
-
                     <h1 className="font-bold text-xl text-white tracking-wide uppercase">
                         FITLOG
                     </h1>
                 </div>
 
                 <div className="flex items-center gap-6">
-                    <Link
-                        href="/"
-                        className="px-4 py-1.5 font-semibold text-gray-400 rounded-full border border-transparent hover:bg-[#ccff00] hover:text-black hover:border-[#ccff00] transition-all duration-300"
-                    >
-                        Workouts
-                    </Link>
-
-                    <Link
-                        href="/my-plan"
-                        className="px-4 py-1.5 font-semibold text-gray-400 rounded-full border border-transparent hover:bg-[#ccff00] hover:text-black hover:border-[#ccff00] transition-all duration-300"
-                    >
-                        My Plan
-                    </Link>
+                    {navLinks.map((link) => {
+                        const isActive = pathname === link.href;
+                        return (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className={`px-4 py-1.5 font-semibold rounded-full border transition-all duration-300 ${
+                                    isActive
+                                        ? "bg-[#ccff00] text-black border-[#ccff00]"
+                                        : "text-gray-400 border-transparent hover:bg-[#ccff00] hover:text-black hover:border-[#ccff00]"
+                                }`}
+                            >
+                                {link.label}
+                            </Link>
+                        );
+                    })}
                 </div>
 
                 <div className="flex items-center gap-5">
-                    <Link href="/my-plan" className="flex items-center gap-2 ">
+                    <Link href="/my-plan" className="flex items-center gap-2">
                         <span className="text-white font-semibold">Plan</span>
                         <span className="w-6 h-6 flex items-center justify-center rounded-full bg-[#ccff00] text-black text-xs font-bold">
                             {todayPlan.length}
