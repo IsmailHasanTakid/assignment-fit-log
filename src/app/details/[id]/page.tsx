@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { FaRegBookmark, FaRegCalendarPlus } from "react-icons/fa";
+import ActionButtons from "./ActionButtons";
 export default async function DetailsPage({ params }) {
     const { id } = await params;
 
@@ -89,14 +90,7 @@ export default async function DetailsPage({ params }) {
                         </ol>
                     </div>
 
-                    <div className="flex items-center gap-4 pt-2">
-                        <button className="flex-1 bg-[#ccff00] text-black font-bold py-3 px-4 rounded-xl text-sm hover:opacity-90 transition flex items-center justify-center gap-2">
-                            <span><FaRegCalendarPlus /></span> Add to today's plan
-                        </button>
-                        <button className="border border-gray-700 bg-[#13161c] text-white font-medium py-3 px-4 rounded-xl text-sm hover:bg-gray-800 transition flex items-center justify-center gap-2">
-                            <span><FaRegBookmark /></span> Save for later
-                        </button>
-                    </div>
+                    <ActionButtons data={data} />
 
                 </div>
             </div>

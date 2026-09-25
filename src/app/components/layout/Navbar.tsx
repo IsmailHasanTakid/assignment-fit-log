@@ -1,11 +1,14 @@
+"use client";
 import React from 'react';
 import Image from 'next/image';
 import logo from "../../../assets/logo.png";
 import Link from 'next/link';
+import { usePlan } from '@/context/PlanContext';
 
 const Navbar = () => {
+    const { todayPlan, saved } = usePlan();
     return (
-        <nav className="bg-[#0c0c0f] px-8 py-5">
+        <nav className="bg-[#0c0c0f] px-8 py-5 fixed top-0 left-0 w-full z-50">
             <div className="flex justify-between items-center">
 
                 <div className="flex items-center gap-2">
@@ -25,31 +28,31 @@ const Navbar = () => {
                 <div className="flex items-center gap-6">
                     <Link
                         href="/"
-                        className="px-4 py-1.5 rounded-full bg-lime-900/40 text-lime-400 font-semibold"
+                        className="px-4 py-1.5 font-semibold text-gray-400 rounded-full border border-transparent hover:bg-[#ccff00] hover:text-black hover:border-[#ccff00] transition-all duration-300"
                     >
                         Workouts
                     </Link>
 
                     <Link
                         href="/my-plan"
-                        className="text-gray-400 hover:text-white transition font-medium"
+                        className="px-4 py-1.5 font-semibold text-gray-400 rounded-full border border-transparent hover:bg-[#ccff00] hover:text-black hover:border-[#ccff00] transition-all duration-300"
                     >
                         My Plan
                     </Link>
                 </div>
 
                 <div className="flex items-center gap-5">
-                    <Link href="/my-plan" className="flex items-center gap-2">
+                    <Link href="/my-plan" className="flex items-center gap-2 ">
                         <span className="text-white font-semibold">Plan</span>
                         <span className="w-6 h-6 flex items-center justify-center rounded-full bg-[#ccff00] text-black text-xs font-bold">
-                            0
+                            {todayPlan.length}
                         </span>
                     </Link>
 
                     <Link href="/my-plan" className="flex items-center gap-2">
                         <span className="text-white font-semibold">Saved</span>
                         <span className="w-6 h-6 flex items-center justify-center rounded-full border border-gray-500 text-white text-xs font-bold">
-                            0
+                            {saved.length}
                         </span>
                     </Link>
                 </div>
