@@ -7,16 +7,18 @@ export default function Home() {
 
   const [fits, setFits] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const getData = async () => {
       try {
         const res = await fetch("https://api.abcz.workers.dev/api/fitlog");
+        if (!res.ok) throw new Error("Failed to load workouts");
         const data = await res.json();
         setFits(data);
       }
-      catch (error) {
-        console.log(error);
+      catch (err) {
+        setError("Couldn't load workouts. Please try again later.");
       }
       finally {
         setLoading(false)
@@ -38,7 +40,20 @@ export default function Home() {
         <p className="text-gray-400 mb-6">Twelve lifts covering every major muscle group.</p>
 
         {isLoading ? (
-          <p className="text-gray-400">Loading workouts…</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="bg-[#16181d] rounded-xl overflow-hidden animate-pulse">
+                <div className="w-full h-64 bg-gray-800" />
+                <div className="p-4 space-y-3">
+                  <div className="h-4 w-20 bg-gray-700 rounded-full" />
+                  <div className="h-5 w-32 bg-gray-700 rounded" />
+                  <div className="h-3 w-24 bg-gray-700 rounded" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : error ? (
+          <p className="text-red-400 text-center py-10">{error}</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {fits.map((fit) => (

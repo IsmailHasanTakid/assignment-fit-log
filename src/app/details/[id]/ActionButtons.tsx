@@ -12,20 +12,20 @@ export default function ActionButtons({ data }) {
 
     const handleAddToPlan = () => {
         if (isAdded) {
-            toast.error("Already added to plan!", { autoClose: 3000 });
+            toast.error(`${data.name} Already added to plan!`, { autoClose: 3000 });
             return;
         }
         addToPlan(data);
-        toast.success("Added to today's plan!", { autoClose: 5000 });
+        toast.success(`${data.name} Added to today's plan!`, { autoClose: 5000 });
     };
 
     const handleSave = () => {
         if (isSaved) {
-            toast.error("Already saved!", { autoClose: 3000 });
+            toast.error(`${data.name} Already saved!`, { autoClose: 3000 });
             return;
         }
         saveForLater(data);
-        toast.success("Saved for later!", { autoClose: 5000 });
+        toast.success(`${data.name} Saved for later!`, { autoClose: 3000 });
     };
 
     return (
@@ -33,8 +33,8 @@ export default function ActionButtons({ data }) {
             <button
                 onClick={handleAddToPlan}
                 className={`flex-1 font-bold py-3 px-4 rounded-xl text-sm transition flex items-center justify-center gap-2 ${isAdded
-                        ? "bg-gray-600 text-gray-300 cursor-not-allowed hover:opacity-100"
-                        : "bg-[#ccff00] text-black hover:opacity-90"
+                    ? "bg-gray-600 text-gray-300 cursor-not-allowed hover:opacity-100"
+                    : "bg-[#ccff00] text-black hover:opacity-90"
                     }`}
             >
                 <span><FaRegCalendarPlus /></span>
@@ -45,7 +45,7 @@ export default function ActionButtons({ data }) {
                 onClick={handleSave}
                 className="border border-gray-700 bg-[#13161c] text-white font-medium py-3 px-4 rounded-xl text-sm hover:bg-gray-800 transition flex items-center justify-center gap-2"
             >
-                {isSaved ? <FaBookmark className="text-white" /> : <FaRegBookmark />} Save for later
+                {isSaved ? <FaBookmark className="text-white" /> : <FaRegBookmark />} {isSaved ? "Saved" : "Save for later"}
             </button>
         </div>
     );

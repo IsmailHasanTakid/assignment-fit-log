@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { usePlan } from "@/context/PlanContext";
 import { CiCircleRemove } from "react-icons/ci";
+import { toast } from "react-toastify";
 
 export default function MyPlanPage() {
     const { todayPlan, saved, removeFromPlan, removeFromSaved, doneIds, toggleDone } = usePlan();
@@ -136,7 +137,15 @@ export default function MyPlanPage() {
                                     )}
 
                                     <button
-                                        onClick={() => (tab === "today" ? removeFromPlan(ex.id) : removeFromSaved(ex.id))}
+                                        onClick={() => {
+                                            if (tab === "today") {
+                                                removeFromPlan(ex.id);
+                                                toast.success(`${ex.name} removed from your plan`, { autoClose: 3000 });
+                                            } else {
+                                                removeFromSaved(ex.id);
+                                                toast.success(`${ex.name} removed from saved`, { autoClose: 3000 });
+                                            }
+                                        }}
                                         className="text-gray-400 hover:text-white text-lg"
                                     >
                                         <CiCircleRemove />
