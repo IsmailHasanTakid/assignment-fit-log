@@ -19,7 +19,7 @@ export function PlanProvider({ children }) {
             if (storedSaved) setSaved(JSON.parse(storedSaved));
             if (storedDone) setDoneIds(JSON.parse(storedDone));
         } catch (err) {
-            console.error("Failed to load plan from localStorage:", err);
+            setError("Failed to load plan from localStorage.");
         } finally {
             setIsLoaded(true);
         }
