@@ -8,7 +8,7 @@ import { CiCircleRemove } from "react-icons/ci";
 export default function MyPlanPage() {
     const { todayPlan, saved, removeFromPlan, removeFromSaved, doneIds, toggleDone } = usePlan();
     const [tab, setTab] = useState("today");
-    const [sortBy, setSortBy] = useState("duration"); // duration | calories | rating
+    const [sortBy, setSortBy] = useState("duration");
 
     const rawList = tab === "today" ? todayPlan : saved;
 
