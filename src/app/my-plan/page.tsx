@@ -33,8 +33,15 @@ export default function MyPlanPage() {
         return sorted;
     }, [rawList, sortBy]);
 
-    const totalMinutes = todayPlan.reduce((sum, ex) => sum + (Number(ex.duration) || 0), 0);
-    const totalCalories = todayPlan.reduce((sum, ex) => sum + (Number(ex.caloriesBurned) || 0), 0);
+    const totalMinutes = rawList.reduce(
+        (sum, ex) => sum + (Number(ex.duration) || 0),
+        0
+    );
+
+    const totalCalories = rawList.reduce(
+        (sum, ex) => sum + (Number(ex.caloriesBurned) || 0),
+        0
+    );
 
 
 
@@ -46,7 +53,7 @@ export default function MyPlanPage() {
             <div className="bg-[#13161c] rounded-xl p-6 flex justify-between mb-6 border border-gray-800">
                 <div>
                     <p className="text-gray-400 text-xs uppercase">Exercises</p>
-                    <p className="text-2xl font-bold text-[#ccff00]">{todayPlan.length}</p>
+                    <p className="text-2xl font-bold text-[#ccff00]">{rawList.length}</p>
                 </div>
                 <div>
                     <p className="text-gray-400 text-xs uppercase">Minutes</p>

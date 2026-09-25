@@ -15,7 +15,7 @@ export default async function DetailsPage({ params }) {
         <main className="min-h-screen bg-[#0d0f12] text-white p-6 md:p-12 flex justify-center items-center">
             <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
 
-                <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-lg border border-gray-800">
+                <div className="relative w-full h-[700px] rounded-2xl overflow-hidden shadow-lg border border-gray-800">
                     <Image
                         src={data.image}
                         alt={data.name}

@@ -42,7 +42,6 @@ export function PlanProvider({ children }) {
     const addToPlan = (exercise) => {
         setTodayPlan((prev) => {
             if (prev.find((item) => item.id === exercise.id)) return prev;
-            if (prev.length >= 5) return prev;
             return [...prev, exercise];
         });
     };
