@@ -8,8 +8,8 @@ import { usePlan } from '@/context/PlanContext';
 const Navbar = () => {
     const { todayPlan, saved } = usePlan();
     return (
-        <nav className="bg-[#0c0c0f] px-8 py-5 fixed top-0 left-0 w-full z-50">
-            <div className="flex justify-between items-center">
+        <nav className="bg-[#0c0c0f] px-8 py-5 mb-10 fixed top-0 left-0 w-full z-50">
+            <div className="flex justify-between items-center max-w-7xl mx-auto">
 
                 <div className="flex items-center gap-2">
                     <Image
