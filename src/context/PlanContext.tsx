@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const PlanContext = createContext(null);
 
@@ -7,6 +7,37 @@ export function PlanProvider({ children }) {
     const [todayPlan, setTodayPlan] = useState([]);
     const [saved, setSaved] = useState([]);
     const [doneIds, setDoneIds] = useState([]);
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    useEffect(() => {
+        try {
+            const storedPlan = localStorage.getItem("fitlog_todayPlan");
+            const storedSaved = localStorage.getItem("fitlog_saved");
+            const storedDone = localStorage.getItem("fitlog_doneIds");
+
+            if (storedPlan) setTodayPlan(JSON.parse(storedPlan));
+            if (storedSaved) setSaved(JSON.parse(storedSaved));
+            if (storedDone) setDoneIds(JSON.parse(storedDone));
+        } catch (err) {
+            console.error("Failed to load plan from localStorage:", err);
+        } finally {
+            setIsLoaded(true);
+        }
+    }, []);
+    useEffect(() => {
+        if (!isLoaded) return;
+        localStorage.setItem("fitlog_todayPlan", JSON.stringify(todayPlan));
+    }, [todayPlan, isLoaded]);
+
+    useEffect(() => {
+        if (!isLoaded) return;
+        localStorage.setItem("fitlog_saved", JSON.stringify(saved));
+    }, [saved, isLoaded]);
+
+    useEffect(() => {
+        if (!isLoaded) return;
+        localStorage.setItem("fitlog_doneIds", JSON.stringify(doneIds));
+    }, [doneIds, isLoaded]);
 
     const addToPlan = (exercise) => {
         setTodayPlan((prev) => {
